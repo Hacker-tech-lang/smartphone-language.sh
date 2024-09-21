@@ -1,5 +1,15 @@
-﻿#!/bin/bash
+#!/bin/bash
 # bisaya.sh - Smartphone Bash Script with Dashboard and Enhanced Features
+
+# Function to display loading progress bar
+loading_progress() {
+  echo -n "Loading"
+  for i in {1..10}; do
+    sleep 0.5
+    echo -n "."
+  done
+  echo " Done!"
+}
 
 # Function to simulate phone status
 phone_status() {
@@ -18,14 +28,14 @@ phone_status() {
 # Function to simulate making a call
 make_call() {
   echo "Dialing $1..."
-  sleep 2
+  loading_progress
   echo "Call in progress with $1"
 }
 
 # Function to simulate sending a text message
 send_text() {
   echo "Sending message to $1: '$2'"
-  sleep 1
+  loading_progress
   echo "Message sent."
 }
 
@@ -40,7 +50,7 @@ calculator() {
   if [ "$input" == "2007" ]; then
     echo "Opening Google..."
     xdg-open "http://google.com" 2>/dev/null
-    sleep 2
+    loading_progress
     return
   fi
   
@@ -51,7 +61,7 @@ calculator() {
   read num2
   result=$(echo "scale=2; $num1 $op $num2" | bc)
   echo "Result: $result"
-  sleep 2
+  loading_progress
 }
 
 # Function to simulate a simple notepad app
@@ -63,8 +73,8 @@ notepad() {
   read note
   echo "Saving note..."
   echo "$note" >> notes.txt
+  loading_progress
   echo "Note saved."
-  sleep 2
 }
 
 # Function to simulate an alarm clock app
@@ -75,7 +85,7 @@ alarm_clock() {
   echo "Enter the time for the alarm (HH:MM):"
   read alarm_time
   echo "Alarm set for $alarm_time"
-  sleep 1
+  loading_progress
 }
 
 # Function to simulate a weather forecast app
@@ -85,7 +95,7 @@ weather_forecast() {
   echo "----------------------------------"
   echo "Today's weather: Sunny, 25°C"
   echo "Tomorrow's weather: Cloudy, 22°C"
-  sleep 2
+  loading_progress
 }
 
 # Function to simulate a music player app
@@ -95,7 +105,7 @@ music_player() {
   echo "----------------------------------"
   songs=("Song1 - Artist1" "Song2 - Artist2" "Song3 - Artist3")
   echo "Playing: ${songs[$RANDOM % ${#songs[@]}]}"
-  sleep 2
+  loading_progress
 }
 
 # Function to simulate a contacts app
@@ -114,10 +124,12 @@ contacts_app() {
       read -p "Enter phone number: " number
       echo "$name: $number" >> contacts.txt
       echo "Contact saved."
+      loading_progress
       ;;
     2)
       echo "All Contacts:"
       cat contacts.txt
+      loading_progress
       ;;
     3)
       dashboard
@@ -126,7 +138,6 @@ contacts_app() {
       echo "Invalid option."
       ;;
   esac
-  sleep 2
 }
 
 # Function to simulate battery saver mode
@@ -136,7 +147,7 @@ battery_saver() {
   echo "----------------------------------"
   echo "Turning on Battery Saver..."
   echo "Battery Saver Mode: ON"
-  sleep 2
+  loading_progress
 }
 
 # Function to simulate settings app
@@ -157,7 +168,7 @@ settings() {
     4) dashboard ;;
     *) echo "Invalid option." ;;
   esac
-  sleep 2
+  loading_progress
 }
 
 # Function to show the dashboard
@@ -203,7 +214,7 @@ dashboard() {
     11) exit ;;
     *) 
       echo "Invalid option."
-      sleep 1
+      loading_progress
       dashboard
       ;;
   esac
@@ -213,4 +224,3 @@ dashboard() {
 while true; do
   dashboard
 done
-
